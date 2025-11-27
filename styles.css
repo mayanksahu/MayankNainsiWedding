@@ -12,7 +12,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7)), url('landscape.jpg');
+    background: linear-gradient(rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7)), url('Landscape.JPG');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -304,7 +304,7 @@ footer p {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero {
-        background: linear-gradient(rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7)), url('portrait.jpg');
+        background: linear-gradient(rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7)), url('Portrait.JPG');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
