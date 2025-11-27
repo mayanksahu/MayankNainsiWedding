@@ -7,8 +7,26 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">M & N</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#story" class="nav-link">Our Story</a></li>
+                <li><a href="#events" class="nav-link">Events</a></li>
+                <li><a href="#livestream" class="nav-link">Live Stream</a></li>
+                <li><a href="#rsvp" class="nav-link">RSVP</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <div>
             <h1>
                 Mayank <span class="ampersand">&</span> Nainsi
@@ -37,7 +55,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="about">
+    <section class="about" id="story">
         <h2 class="scroll-fade-in">Our Story</h2>
         <div class="couple-container">
             <div class="person scroll-slide-left">
@@ -56,7 +74,7 @@
     </section>
 
     <!-- Event Details Section -->
-    <section class="details">
+    <section class="details" id="events">
         <h2 class="scroll-fade-in">Wedding Events</h2>
         <div class="events">
             <div class="event-card scroll-scale">
@@ -86,8 +104,27 @@
         </div>
     </section>
 
+    <!-- Live Stream Section -->
+    <section class="livestream" id="livestream">
+        <h2 class="scroll-fade-in">Live Stream</h2>
+        <p class="scroll-fade-in">Watch our wedding ceremony live from anywhere in the world!</p>
+        <div class="video-container scroll-scale">
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <p>Live stream link will be available soon</p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">Check back closer to the wedding date</p>
+            </div>
+            <!-- Uncomment and add your YouTube link when ready:
+            <iframe width="100%" height="100%" src="YOUR_YOUTUBE_EMBED_LINK" 
+                    title="Wedding Live Stream" frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+            -->
+        </div>
+    </section>
+
     <!-- RSVP Section -->
-    <section class="rsvp">
+    <section class="rsvp" id="rsvp">
         <h2 class="scroll-fade-in">Join Our Celebration</h2>
         <p class="scroll-fade-in">We would be honored to have you celebrate with us!</p>
         <button class="scroll-scale" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScUpvaxZpPh4aINdYnxi9lgvEhP36D-yIhrFMJ47tQBuMDs5A/viewform?usp=header', '_blank')">RSVP Now</button>
@@ -100,5 +137,49 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Change navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
