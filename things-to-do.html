@@ -63,11 +63,18 @@
         .attraction-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            overflow: hidden;
+        }
+
+        .attraction-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .attraction-card:hover .attraction-image img {
+            transform: scale(1.05);
         }
 
         .attraction-content {
@@ -176,7 +183,9 @@
         <h2 class="section-title">Historical & Cultural Attractions</h2>
         <div class="attraction-grid">
             <div class="attraction-card">
-                <div class="attraction-image">🛕</div>
+                <div class="attraction-image">
+                    <img src="Sanchi.webp" alt="Sanchi Stupa">
+                </div>
                 <div class="attraction-content">
                     <h3>Sanchi Stupa (Great Stupa)</h3>
                     <span class="distance">📍 2 km from venue</span>
@@ -186,7 +195,9 @@
             </div>
 
             <div class="attraction-card">
-                <div class="attraction-image">⛩️</div>
+                <div class="attraction-image">
+                    <img src="udaygiri.JPG" alt="Udayagiri Caves">
+                </div>
                 <div class="attraction-content">
                     <h3>Udayagiri Caves</h3>
                     <span class="distance">📍 13 km from venue</span>
@@ -196,7 +207,9 @@
             </div>
 
             <div class="attraction-card">
-                <div class="attraction-image">🎨</div>
+                <div class="attraction-image">
+                    <img src="bhimbetka.jpg" alt="Bhimbetka Rock Shelters">
+                </div>
                 <div class="attraction-content">
                     <h3>Bhimbetka Rock Shelters</h3>
                     <span class="distance">📍 45 km from venue</span>
@@ -206,7 +219,9 @@
             </div>
 
             <div class="attraction-card">
-                <div class="attraction-image">🕉️</div>
+                <div class="attraction-image">
+                    <img src="Mahakal.jpg" alt="Mahakaleshwar Temple">
+                </div>
                 <div class="attraction-content">
                     <h3>Mahakaleshwar Temple, Ujjain</h3>
                     <span class="distance">📍 110 km from venue</span>
