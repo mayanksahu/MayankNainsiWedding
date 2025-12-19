@@ -264,11 +264,21 @@ body {
     color: #667eea;
 }
 
+.date-section {
+    margin-bottom: 60px;
+}
+
+.event-date-header {
+    font-size: 2rem;
+    color: #764ba2;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
 .events {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
-    flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -277,9 +287,6 @@ body {
     background: #f9f9f9;
     padding: 40px;
     border-radius: 15px;
-    flex: 1;
-    min-width: 280px;
-    max-width: 350px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
 }
@@ -557,6 +564,16 @@ footer p {
     .livestream h2,
     .rsvp h2 {
         font-size: 2rem;
+    }
+
+    .events {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    .event-card {
+        padding: 30px 20px;
     }
 
     .video-container {
