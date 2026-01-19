@@ -12,6 +12,10 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; frame-src https:;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Live & Photos - Mayank & Nainsi Wedding</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -247,9 +251,107 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
+
+        /* Password Protection Overlay */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .password-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .password-box {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .password-box h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .password-box p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .password-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .password-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .password-error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .password-error.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
+    <!-- Password Protection Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <h2>🔒 Protected Content</h2>
+            <p>Please enter the password to view photos and livestream</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter password" />
+            <button onclick="checkPassword()" class="password-submit">Access Photos</button>
+            <div class="password-error" id="passwordError">Incorrect password. Please try again.</div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -302,7 +404,7 @@
         <h2>📸 Photo Albums</h2>
         <p style="text-align: center; font-size: 1.1rem; color: #666; max-width: 800px; margin: 0 auto 40px;">View and contribute to our wedding memories! Share your photos to help us capture every special moment.</p>
         <div class="albums-grid">
-            <a href="https://photos.app.goo.gl/9FSxMZPHicveCrPh9" target="_blank" class="album-card">
+            <a href="https://photos.app.goo.gl/9FSxMZPHicveCrPh9" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">🌼</div>
                 <div class="album-content">
                     <h3>Haldi Ceremony</h3>
@@ -311,7 +413,7 @@
                 </div>
             </a>
 
-            <a href="https://photos.app.goo.gl/V5PoQDovKKyfqEpJ8" target="_blank" class="album-card">
+            <a href="https://photos.app.goo.gl/V5PoQDovKKyfqEpJ8" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">💃</div>
                 <div class="album-content">
                     <h3>Sangeet Night</h3>
@@ -320,7 +422,7 @@
                 </div>
             </a>
 
-            <a href="https://photos.app.goo.gl/uxSZmNRw7PpA1XfKA" target="_blank" class="album-card">
+            <a href="https://photos.app.goo.gl/uxSZmNRw7PpA1XfKA" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">🌺</div>
                 <div class="album-content">
                     <h3>Tilak & Phaldaan</h3>
@@ -329,7 +431,7 @@
                 </div>
             </a>
 
-            <a href="https://photos.app.goo.gl/woVi6ixciDmNdBtcA" target="_blank" class="album-card">
+            <a href="https://photos.app.goo.gl/woVi6ixciDmNdBtcA" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">💒</div>
                 <div class="album-content">
                     <h3>Wedding Ceremony</h3>
@@ -374,6 +476,37 @@
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
             });
+        });
+
+        // Password Protection
+        const correctPassword = 'Sanchi1995';
+        const overlay = document.getElementById('passwordOverlay');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordError = document.getElementById('passwordError');
+
+        // Check if already authenticated in this session
+        if (sessionStorage.getItem('photosAuthenticated') === 'true') {
+            overlay.classList.add('hidden');
+        }
+
+        function checkPassword() {
+            const enteredPassword = passwordInput.value;
+            if (enteredPassword === correctPassword) {
+                sessionStorage.setItem('photosAuthenticated', 'true');
+                overlay.classList.add('hidden');
+                passwordError.classList.remove('show');
+            } else {
+                passwordError.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Allow Enter key to submit
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
         });
     </script>
 </body>
