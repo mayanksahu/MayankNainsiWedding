@@ -338,9 +338,14 @@
         .password-error.show {
             display: block;
         }
+
+        /* Hide content until authenticated */
+        body.locked .page-content {
+            display: none !important;
+        }
     </style>
 </head>
-<body>
+<body class="locked">
     <!-- Password Protection Overlay -->
     <div class="password-overlay" id="passwordOverlay">
         <div class="password-box">
@@ -352,6 +357,7 @@
         </div>
     </div>
 
+    <div class="page-content">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -404,7 +410,7 @@
         <h2>📸 Photo Albums</h2>
         <p style="text-align: center; font-size: 1.1rem; color: #666; max-width: 800px; margin: 0 auto 40px;">View and contribute to our wedding memories! Share your photos to help us capture every special moment.</p>
         <div class="albums-grid">
-            <a href="https://photos.app.goo.gl/9FSxMZPHicveCrPh9" target="_blank" rel="noopener noreferrer" class="album-card">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">🌼</div>
                 <div class="album-content">
                     <h3>Haldi Ceremony</h3>
@@ -413,7 +419,7 @@
                 </div>
             </a>
 
-            <a href="https://photos.app.goo.gl/V5PoQDovKKyfqEpJ8" target="_blank" rel="noopener noreferrer" class="album-card">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">💃</div>
                 <div class="album-content">
                     <h3>Sangeet Night</h3>
@@ -422,7 +428,7 @@
                 </div>
             </a>
 
-            <a href="https://photos.app.goo.gl/uxSZmNRw7PpA1XfKA" target="_blank" rel="noopener noreferrer" class="album-card">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">🌺</div>
                 <div class="album-content">
                     <h3>Tilak & Phaldaan</h3>
@@ -431,7 +437,7 @@
                 </div>
             </a>
 
-            <a href="https://photos.app.goo.gl/woVi6ixciDmNdBtcA" target="_blank" rel="noopener noreferrer" class="album-card">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="album-card">
                 <div class="album-thumbnail">💒</div>
                 <div class="album-content">
                     <h3>Wedding Ceremony</h3>
@@ -459,6 +465,7 @@
         <p>&copy; 2025 Mayank & Nainsi Wedding. All rights reserved.</p>
         <p style="margin-top: 10px;">Made with ❤️</p>
     </footer>
+    </div><!-- End page-content -->
 
     <script>
         // Mobile Navigation Toggle
@@ -484,16 +491,38 @@
         const passwordInput = document.getElementById('passwordInput');
         const passwordError = document.getElementById('passwordError');
 
+        // Obfuscated photo links (Base64 encoded)
+        const photoLinks = {
+            haldi: atob('aHR0cHM6Ly9waG90b3MuYXBwLmdvby5nbC85RlN4TVpQSGljdmVDclBoOQ=='),
+            sangeet: atob('aHR0cHM6Ly9waG90b3MuYXBwLmdvby5nbC9WNVBvUURvdktLeWZxRXBKOA=='),
+            tilak: atob('aHR0cHM6Ly9waG90b3MuYXBwLmdvby5nbC91eFNabk53N1BwQTFYZktB'),
+            wedding: atob('aHR0cHM6Ly9waG90b3MuYXBwLmdvby5nbC93b1ZpNml4Y2lEbU5kQnRjQQ==')
+        };
+
         // Check if already authenticated in this session
         if (sessionStorage.getItem('photosAuthenticated') === 'true') {
+            unlockContent();
+        }
+
+        function unlockContent() {
+            document.body.classList.remove('locked');
             overlay.classList.add('hidden');
+            
+            // Inject real photo links
+            const albumCards = document.querySelectorAll('.album-card');
+            if (albumCards.length >= 4) {
+                albumCards[0].href = photoLinks.haldi;
+                albumCards[1].href = photoLinks.sangeet;
+                albumCards[2].href = photoLinks.tilak;
+                albumCards[3].href = photoLinks.wedding;
+            }
         }
 
         function checkPassword() {
             const enteredPassword = passwordInput.value;
             if (enteredPassword === correctPassword) {
                 sessionStorage.setItem('photosAuthenticated', 'true');
-                overlay.classList.add('hidden');
+                unlockContent();
                 passwordError.classList.remove('show');
             } else {
                 passwordError.classList.add('show');
